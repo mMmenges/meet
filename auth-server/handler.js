@@ -1,61 +1,48 @@
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-const calendar = google.calendar("v3");
-/**
- * SCOPES allows you to set access levels; this is set to readonly for now because you don't have access rights to
- * update the calendar yourself. For more info, check out the SCOPES documentation at this link: https://developers.google.com/identity/protocols/oauth2/scopes
- */
-const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+'use strict';
 
-/**
- * Credentials are those values required to get access to your calendar. If you see “process.env” this means
- * the value is in the “config.json” file. This is a best practice as it keeps your API secrets hidden. Please remember to add “config.json” to your “.gitignore” file.
- */
-const credentials = {
-    client_id: process.env.CLIENT_ID,
-    project_id: process.env.PROJECT_ID,
-    client_secret: process.env.CLIENT_SECRET,
-    calendar_id: process.env.CALENDAR_ID,
-    auth_uri: "https://accounts.google.com/o/oauth2/auth",
-    token_uri: "https://oauth2.googleapis.com/token",
-    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-    redirect_uris: ["https://mmmenges.github.io/meet"],
-    javascript_origins: ["https://mmmenges.github.io", "http://localhost:3000"],
-};
-const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
-const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
-);
+const axios = require('axios');
 
-/**
- *
- * The first step in the OAuth process is to generate a URL so users can log in with
- * Google and be authorized to see your calendar. After logging in, they’ll receive a code
- * as a URL parameter.
- *
- */
-module.exports.getAuthURL = async() => {
-    /**
-     *
-     * Scopes array passed to the `scope` option. Any scopes passed must be enabled in the
-     * "OAuth consent screen" settings in your project on your Google Console. Also, any passed
-     *  scopes are the ones users will see when the consent screen is displayed to them.
-     *
-     */
-    const authUrl = oAuth2Client.generateAuthUrl({
-        access_type: "offline",
-        scope: SCOPES,
-    });
+module.exports.getAccessToken = async(event) => {
+
+    const MEETUP_OAUTH_URL = 'https://secure.meetup.com/oauth2/access' +
+        '?client_id=100295477959-tem3bmq4gjh0pmq56bk4b4qi9b7dqmbu' +
+        '&client_secret=466LP0JI7ZTkGUr41Ai-pk_y' +
+        '&grant_type=authorization_code' +
+        '&redirect_uri=https://mmmenges.github.io/meet/' +
+        '&code=' + event.pathParameters.code;
+
+    const info = await axios.post(MEETUP_OAUTH_URL);
 
     return {
         statusCode: 200,
         headers: {
-            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({
-            authUrl: authUrl,
+            access_token: info.data.access_token,
+            refresh_token: info.data.refresh_token,
+        }),
+    };
+};
+
+module.exports.refreshAccessToken = async(event) => {
+
+    const MEETUP_OAUTH_URL = 'https://secure.meetup.com/oauth2/access' +
+        '?client_id=p7ek3hd2gcir2hpcvsih91or6d' +
+        '&client_secret=pqgonkb21iceki5idn28u6pl5a' +
+        '&grant_type=refresh_token' +
+        '&refresh_token=' + event.pathParameters.refresh_token;
+
+    const info = await axios.post(MEETUP_OAUTH_URL);
+
+    return {
+        statusCode: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            access_token: info.data.access_token,
+            refresh_token: info.data.refresh_token,
         }),
     };
 };
