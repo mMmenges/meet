@@ -59,3 +59,113 @@ module.exports.getAuthURL = async() => {
         }),
     };
 };
+
+module.exports.getAccessToken = async(event) => {
+    //code will go in here (auth-server-auth-server-dev-getAuthURL)
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id,
+        client_secret,
+        redirect_uris[0]
+    );
+    // Get authorization code from the URL query
+    const code = decodeURIComponent(`${event.pathParameters.code}`);
+    /* test
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ client_id, client_secret })
+    }
+    */
+    return new Promise((resolve, reject) => {
+            oAuth2Client.getToken(code, (err, token) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(token);
+            });
+        })
+        .then((token) => {
+            // Respond with OAuth token
+            return {
+                statusCode: 200,
+                //was this missing to avoid the CORS-Error?
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                //was this missing to avoid the CORS-Error?
+                body: JSON.stringify(token),
+            };
+        })
+        .catch((err) => {
+            console.error(err);
+            return {
+                statusCode: 500,
+                //was this missing to avoid the CORS-Error?
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                //was this missing to avoid the CORS-Error?
+                body: JSON.stringify(err),
+            };
+        });
+}
+
+module.exports.getCalendarEvents = async(event) => {
+
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id,
+        client_secret,
+        redirect_uris[0]
+    );
+
+    const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+
+    // use access token returned from getAccessToken function
+    oAuth2Client.setCredentials({ access_token });
+
+    // get a list of events from the “fullstackwebdev” Google calendar using oAuth2Client
+    return new Promise((resolve, reject) => {
+            calendar.events.list({
+                    calendarId: calendar_id,
+                    auth: oAuth2Client,
+                    timeMin: new Date().toISOString(),
+                    singleEvents: true,
+                    orderBy: "startTime",
+                },
+                (error, response) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(response);
+                    }
+                }
+            );
+        })
+        .then((results) => {
+            return {
+                statusCode: 200,
+                //was this missing to avoid the CORS-Error?
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                //was this missing to avoid the CORS-Error?
+                body: JSON.stringify({
+                    events: results.data.items,
+                }),
+            };
+        })
+        .catch((err) => {
+            console.error(err);
+            return {
+                statusCode: 500,
+                //was this missing to avoid the CORS-Error?
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                //was this missing to avoid the CORS-Error?
+                body: JSON.stringify(err),
+            };
+        });
+}
