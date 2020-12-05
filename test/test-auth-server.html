@@ -45,10 +45,10 @@
         const getURLElement = document.getElementById("getURL");
         const resultElement = document.getElementById("result");
         const resultLink = document.getElementById("authURL");
-        const lambdaURL = 'https://zihexkboze.execute-api.us-east-1.amazonaws.com/dev/api/token/';
+        const lambdaURL = 'https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/token/';
         // Replace this with your own endpoint
         const getAuthURL =
-            "YOUR GET AUTH URL";
+            "https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url";
 
         getURLElement.onclick = function() {
             fetch(getAuthURL)
@@ -72,15 +72,17 @@
         const getAccessToken = document.getElementById("getToken");
         const accessTokenElement = document.getElementById("accessToken");
         const getToken =
-            "YOUR GET TOKEN URL";
+            "https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/token/";
 
         getAccessToken.onclick = function() {
-            let code = codeValue.value;
+            let code = '' //codeValue.value;
+            console.log("code:", code)
+                // if the authorization code is not URL-encoded, then URL-encode it.
+                // if (decodeURIComponent(code) === code) {
+            code = encodeURIComponent(codeValue.value);
+            // }
 
-            // if the authorization code is not URL-encoded, then URL-encode it.
-            if (decodeURIComponent(code) === code) {
-                code = encodeURIComponent(codeValue.value);
-            }
+            console.log("code after:", code)
             const getTokenRequest = getToken + code;
             fetch(getTokenRequest)
                 .then(function(response) {
@@ -88,7 +90,10 @@
                 })
                 .then(function(json) {
                     accessTokenElement.innerText = JSON.stringify(json);
-                });
+                }).catch(e => {
+                    console.log(e)
+                    console.log(e.response.message)
+                })
         };
     </script>
 </body>
