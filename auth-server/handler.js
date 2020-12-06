@@ -92,7 +92,7 @@ module.exports.getAccessToken = async(event) => {
                 statusCode: 200,
                 //was this missing to avoid the CORS-Error?
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
+                    'Access-Control-Allow-Origin': '*'
                 },
                 //was this missing to avoid the CORS-Error?
                 body: JSON.stringify(token),
