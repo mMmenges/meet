@@ -5,6 +5,7 @@ import EventList from '../EventList';
 import CitySearch from '../CitySearch';
 
 describe('<App /> component', () => {
+  
   let AppWrapper;
   beforeAll(() => {
     AppWrapper = shallow(<App />);
