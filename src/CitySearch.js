@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 class CitySearch extends Component {
   state = {
-    query: '',
+    query: 'Frankfurt, Germany',
+    locations: [],
     suggestions: []
   }
 
@@ -16,6 +17,13 @@ class CitySearch extends Component {
       suggestions,
     });
   };
+
+  // Scenario 3
+  handleItemClicked = (suggestion) => {
+    this.setState({
+      query: suggestion
+    });
+  }
 
   render() {
     return (
