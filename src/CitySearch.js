@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class CitySearch extends Component {
   state = {
-    query: 'Frankfurt, Germany',
+    query: '',
     locations: [],
     suggestions: []
   }
