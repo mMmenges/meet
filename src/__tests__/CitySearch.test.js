@@ -4,14 +4,16 @@ import CitySearch from '../CitySearch';
 import { mockData } from '../mock-data';
 import { extractLocations } from '../api';
 
+
 describe('<CitySearch /> component', () => {
   let locations, CitySearchWrapper;
   beforeAll(() => {
    locations = extractLocations(mockData);
-   CitySearchWrapper = shallow(<CitySearch locations={ locations } />);
+   CitySearchWrapper = shallow(
+     <CitySearch locations={ locations } updateEvents={() => {}} />);
   });
 
-  test('render text input', () => {
+    test('render text input', () => {
     
     expect(CitySearchWrapper.find('.city')).toHaveLength(1);
   });
@@ -41,7 +43,7 @@ describe('<CitySearch /> component', () => {
 // 3rd scenario
 test("selecting a suggestion should change query state", () => {
   CitySearchWrapper.setState({
-      query: 'Frankfurt, Germany',
+      query: '',
     suggestions: locations
   });
   const suggestions = CitySearchWrapper.state('suggestions');
