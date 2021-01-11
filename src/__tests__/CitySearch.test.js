@@ -12,15 +12,12 @@ describe("<CitySearch /> component", () => {
       <CitySearch locations={locations} updateEvents={() => {}} />
     );
   });
-
   test("render text input", () => {
     expect(CitySearchWrapper.find(".city")).toHaveLength(1);
   });
-
   test("renders a list of suggestions", () => {
     expect(CitySearchWrapper.find(".suggestions")).toHaveLength(1);
   });
-
   test("renders text input correctly", () => {
     const query = CitySearchWrapper.state("query");
     expect(CitySearchWrapper.find(".city").prop("value")).toBe(query);
@@ -35,9 +32,6 @@ describe("<CitySearch /> component", () => {
     CitySearchWrapper.find(".city").simulate("change", eventObject);
     expect(CitySearchWrapper.state("query")).toBe("Berlin");
   });
-
-  
-  
   test("render list of suggestions correctly", () => {
 CitySearchWrapper.setState({ suggestions: locations });
 const suggestions = CitySearchWrapper.state("suggestions");
@@ -50,9 +44,6 @@ for (let i = 0; i < suggestions.length; i += 1) {
   );
 }
 });
-
-  
-
   test("suggestion list match the query when changed", () => {
     CitySearchWrapper.setState({ query: "", suggestions: [] });
     CitySearchWrapper.find(".city").simulate("change", {
