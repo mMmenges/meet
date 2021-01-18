@@ -127,7 +127,9 @@ module.exports.getCalendarEvents = async(event) => {
 
     // get a list of events from the “fullstackwebdev” Google calendar using oAuth2Client
     return new Promise((resolve, reject) => {
-            calendar.events.list({
+            calendar.events.list(
+                {
+                    
                     calendarId: calendar_id,
                     auth: oAuth2Client,
                     timeMin: new Date().toISOString(),

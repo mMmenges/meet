@@ -165,11 +165,6 @@ input[type="number"] {
     flex-direction: column;
 }
 
-.alert {
-    height: 40px;
-    font-size: 12px;
-}
-
 .chartWrapper {
     margin: 0 auto;
     max-width: 900px;
