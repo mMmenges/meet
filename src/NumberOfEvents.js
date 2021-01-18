@@ -1,6 +1,4 @@
-// check if needed for 4.3
 import React, { Component } from "react";
-import { ErrorAlert } from "./alert";
 
 class NumberOfEvents extends Component {
   state = {
@@ -28,9 +26,7 @@ class NumberOfEvents extends Component {
   render() {
     return (
       <div className="number-of-events">
-        <ErrorAlert text={this.state.infoText} />
-        {/* <h3 className="number-of-events">Number of Events to view:</h3> */}
-        <label className="number-of-events-label">Number of Events: </label>
+                <label className="number-of-events-label">Number of Events: </label>
         <input
           type="number"
           className="event-number"
