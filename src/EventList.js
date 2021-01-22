@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Event from './Event';
 
-class EventList extends Component {
-  render() {
-    const { events } = this.props;
-    return (
+const EventList = ({ events }) => {
+  return (!events) ? null : (
       <ul className='EventList'>
         {events.map((event) => (
           <li key={event.id}>
@@ -12,7 +11,11 @@ class EventList extends Component {
           </li>
         ))}
       </ul>
-    );
-  }
+  )
 }
+ 
+EventList.propTypes = {
+  events: PropTypes.array.isRequired,
+};
+
 export default EventList;

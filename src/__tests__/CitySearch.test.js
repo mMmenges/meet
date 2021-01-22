@@ -58,14 +58,15 @@ for (let i = 0; i < suggestions.length; i += 1) {
 
 
 
-  // 3rd scenario
+  // 3rd scenario // update in 4.4
   test("selecting a suggestion should change query state", () => {
     CitySearchWrapper.setState({
-      query: "",
+      query: '',
       suggestions: locations,
     });
-    const suggestions = CitySearchWrapper.state("suggestions");
-    CitySearchWrapper.find(".suggestions li").at(0).simulate("click");
-    expect(CitySearchWrapper.state("query")).toBe(suggestions[0]);
+    const suggestions = CitySearchWrapper.state('suggestions');
+    CitySearchWrapper.find(".suggestions li").at(0).simulate('click');
+    expect(CitySearchWrapper.state('query')).toBe(suggestions[0]);
+    expect(CitySearchWrapper.find('.suggestions').prop('style')).toEqual({ display: 'none' });
   });
 });
