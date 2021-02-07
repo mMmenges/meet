@@ -1,181 +1,38 @@
-body,
-html {
-    width: 100%;
-    height: 100%;
-}
-
 .App {
-    text-align: center;
-    color: #333333;
+  text-align: center;
 }
 
-.App * {
-    box-sizing: border-box;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-h1 {
-    font-size: 4em;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-h2 {
-    margin: 0;
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-ul {
-    padding: 0;
-    list-style: none;
+.App-link {
+  color: #61dafb;
 }
 
-p {
-    margin: 5px 0;
-}
-
-input[type="text"],
-input[type="number"] {
-    padding: 8px 6px 8px 10px;
-    border-radius: 19px;
-    outline: none;
-    border: 1px solid #f6405f;
-    font-size: 14px;
-    line-height: 20px;
-    align-self: center;
-    height: 38px;
-    text-align: center;
-}
-
-.headLine {
-    width: 100%;
-    color: #f6405f;
-}
-
-.headLine span {
-    font-size: 10px;
-}
-
-.city {
-    width: 250px;
-}
-
-.CitySearch {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-.suggestions {
-    width: 250px;
-    align-self: center;
-    margin: 0;
-    font-size: 14px;
-}
-
-.suggestions>li {
-    text-align: left;
-    padding: 8px 6px 8px 10px;
-    background-color: #eee;
-    cursor: default;
-}
-
-.suggestions>li:first-child {
-    border-top-left-radius: 19px;
-    border-top-right-radius: 19px;
-}
-
-.suggestions>li:last-child {
-    border-bottom-left-radius: 19px;
-    border-bottom-right-radius: 19px;
-}
-
-.suggestions>li:hover {
-    background-color: #BCDCDB;
-}
-
-.event {
-    min-height: 200px;
-    padding: 10px 10px 20px;
-    margin: 20px auto;
-    text-align: left;
-    position: relative;
-    background-color: white;
-    box-shadow: 0 0.313rem 0.625rem 0 rgba(0, 0, 0, .12);
-    border-radius: 3px;
-    max-width: 800px;
-    color: rgba(1, 69, 93, 1);
-}
-
-.event__Overview--data {
-    display: flex;
-    flex-direction: row;
-}
-
-.event__Details {
-    margin-bottom: 40px;
-}
-
-.event__Details a {
-    text-decoration: none;
-    color: #f6405f;
-}
-
-.event__Details h4 {
-    text-align: right;
-}
-
-.details-btn {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    padding: 5px 8px;
-    font-size: 14px;
-    border-radius: 3px;
-    letter-spacing: 2px;
-    height: 40px;
-    border: none;
-    outline: none;
-    outline-style: none;
-    cursor: pointer;
-    background-image: linear-gradient(30deg, #00abba, #51d0b9);
-    background-repeat: repeat-x;
-    color: white;
-}
-
-.name {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.group-name {
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
-.going,
-.visibility {
-    font-style: italic;
-}
-
-.description {
-    overflow-x: hidden;
-}
-
-.numberOfEvents {
-    width: 100%;
-    margin: 20px 0 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.chartWrapper {
-    margin: 0 auto;
-    max-width: 900px;
-}
-
-.event .recharts-responsive-container {
-    margin-bottom: 40px;
-}
-
-@media only screen and (min-width: 500px) {
-    .event .recharts-responsive-container {
-        margin-bottom: 0;
-    }
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,22 +1,17 @@
-
 import React, { Component } from 'react';
-import NumberOfEvents from './NumberOfEvents';
-import CitySearch from './CitySearch';
-import EventList from './EventList';
-import "./nprogress.css";
-
 import './App.css';
-import { mockData } from './mock-data';
+import EventList from './EventList';
+import CitySearch from './CitySearch';
 
 class App extends Component {
-  
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <CitySearch />
-        <EventList events={mockData} />
+        <EventList />
       </div>
     );
   }
 }
+
 export default App;
