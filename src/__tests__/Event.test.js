@@ -1,59 +1,45 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { mockData } from '../mock-data';
 import Event from '../Event';
-//import moment from 'moment';
+import { mockData } from "../mock-data";
 
 describe('<Event /> component', () => {
-  let EventWrapper, event;
-  beforeAll(() => {
-    event = mockData[0]; // Mock event prop
-    EventWrapper = shallow(<Event event={event} />);
-  });
+    let EventWrapper;
+    beforeAll(() => { 
+        EventWrapper = shallow(<Event event={mockData[0]}/>);
+    });
 
-  // Component props
-  test('should render with correct event prop', () => {
-    expect(EventWrapper.instance().props.event).toEqual(event);
-  });
+    test('render event time and date', () => {
+        expect(EventWrapper.find('.eventDate')).toHaveLength(1);
+    });
 
-  test('should render event summary correctly', () => {
-    expect(EventWrapper.find('.summary').text()).toBe(event.summary);
-  });
+    test('render event name', () => {
+         expect(EventWrapper.find('.eventName')).toHaveLength(1);
+    });
 
-  test('should render event location correctly', () => {
-    expect(EventWrapper.find('.location').text()).toBe(event.location);
-  });
+    test('render event details', () => {
+        expect(EventWrapper.find('.eventDetails')).toHaveLength(1);
+    });
 
-  test('should render details button', () => {
-    expect(EventWrapper.find('.btn-details')).toHaveLength(1);
-  });
+    test('click on details button should expand event details', () => {
+        EventWrapper.setState({
+            showDetails: true
+        });
+        EventWrapper.find('.eventDetails').at(0).simulate("click");
+        expect(EventWrapper.state('showDetails')).toBe(true);
+    });
 
-  // Component state
-  test('should render event component state correctly', () => {
-    expect(EventWrapper.state('isExpanded')).toBe(false);
-  });
+    test('click on details button should collapse event details', () => {
+        EventWrapper.setState({
+            showDetails: false
+          });
+        EventWrapper.find('.eventDetails').at(0).simulate("click");
+        expect(EventWrapper.state('showDetails')).toBe(false);
+    });
 
-  // Component state change (collapsed event -> expanded event)
-  test('clicking "show-details" button should expand event component', () => {
-    EventWrapper.find('.btn-details').simulate('click');
-    expect(EventWrapper.state('isExpanded')).toBe(true);
-  });
-
-  test('expanded event should render event html link correctly', () => {
-    expect(EventWrapper.find('.link').props().href).toBe(event.htmlLink);
-  });
-
-  test('expanded event should render event description correctly', () => {
-    expect(EventWrapper.find('.description').text()).toBe(event.description);
-  });
-
-  // Component state change (expanded event -> collapsed event)
-  test('expanded event should collapse when details button is clicked', () => {
-    EventWrapper.find('.btn-details').simulate('click');
-    expect(EventWrapper.state('isExpanded')).toBe(false);
-  });
-
-  test('expanded event component should no longer be present after collapsing event', () => {
-    expect(EventWrapper.find('.Expanded-Event')).toHaveLength(0);
-  });
+    // test('click on details button should collapse event details', () => {
+    //     expect(EventWrapper.state('showDetails')).toEqual(false);
+    //     EventWrapper.find('.details').simulate('click');
+    //     expect(EventWrapper.find(mockData).prop('isOpen')).toEqual(false);
+    // });
 });
