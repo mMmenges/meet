@@ -3,7 +3,7 @@ import CitySearch from "./CitySearch";
 import EventList from "./EventList";
 import "./App.css";
 import NumberOfEvents from "./NumberOfEvents";
-import { getEvents } from "./api";
+import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
 
 class App extends Component {
@@ -16,11 +16,11 @@ class App extends Component {
 
   async componentDidMount() {
     this.mounted = true;
-    getEvents().then((response) => {
+    getEvents().then((events) => {
       if (this.mounted) {
         this.setState({
-          events: response.events,
-          locations: response.locations,
+          events,
+          locations: extractLocations(events)
         });
       }
     });
@@ -33,7 +33,7 @@ class App extends Component {
   updateEvents = (location, eventCount) => {
     const { currentLocation, numberOfEvents } = this.state;
     if (location) {
-      getEvents().then((response) => {
+      getEvents().then((events) => {
         const locationEvents =
           location === "all"
             ? response.events
