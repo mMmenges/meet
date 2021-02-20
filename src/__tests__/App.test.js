@@ -7,7 +7,6 @@ import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from "../mock-data";
 
-
 describe('<App /> integration', () => {
   test("get list of events after the user selects a city", async () => {
     const AppWrapper = mount(<App />);
@@ -32,7 +31,7 @@ describe('<App /> integration', () => {
 describe("<App /> component", () => {
   let AppWrapper;
   beforeAll(() => {
-    AppWrapper = mount(<App />);
+    AppWrapper = shallow(<App />);
   });
 
   test("render list of events", () => {
@@ -48,7 +47,7 @@ describe("<App /> component", () => {
   });
 
   test("render correct list of events", () => {
-    const AppWrapper = mount(<App />);
+    const AppWrapper = shallow(<App />);
     AppWrapper.setState({
       events: mockData,
     });

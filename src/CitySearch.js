@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-//import { mockData } from "./mock-data";
-//import { extractLocations } from "./api";
 
 class CitySearch extends Component {
   state = {
-    //locations: extractLocations(mockData),
-    locations: this.props.locations,
-    query: "Berlin, Germany",
+    query: "",
     suggestions: [],
     showSuggestions: false,
   };
@@ -41,9 +37,9 @@ class CitySearch extends Component {
           className="city"
           value={this.state.query}
           onChange={this.handleInputChanged}
+          placeholder="City"
         />
-        <ul className={
-            this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"
+        <ul className= {this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"
           }>
           {this.state.suggestions.map((suggestion) => (
             <li
@@ -56,7 +52,7 @@ class CitySearch extends Component {
           <li onClick={() => this.handleItemClicked("all")}>
             <b>See all cities</b>
           </li>
-          ;
+          
         </ul>
       </div>
     );
@@ -64,57 +60,3 @@ class CitySearch extends Component {
 }
 
 export default CitySearch;
-
-/*
-import React, { Component } from "react";
-//import { mockData } from "./mock-data";
-//import { extractLocations } from "./api";
-
-class CitySearch extends Component {
-  state = {
-    locations: this.props.location,
-    query: "",
-    suggestions: [],
-  };
-
-   handleInputChanged = (event) => {
-    const value = event.target.value;
-    this.setState({ query: value });
-  };
-
-  handleItemClicked = (suggestion) => {
-    this.setState({
-      query: suggestion
-    });
-  
-    this.props.updateEvents(suggestion);
-  }
-
-  render() {
-    return (
-      <div className="CitySearch">
-        <input
-          type="text"
-          className="city"
-          value={this.state.query}
-          onChange={this.handleInputChanged}
-        />
-        <ul className="suggestions">
-  {this.state.suggestions.map((suggestion) => (
-    <li
-      key={suggestion}
-      onClick={() => this.handleItemClicked(suggestion)}
-    >{suggestion}</li>
-  ))}
-  <li onClick={() => this.handleItemClicked("all")}>
-  <b>See all cities</b>
-</li>
-</ul>
-
-      </div>
-    );
-  }
-}
-
-export default CitySearch;
-*/
