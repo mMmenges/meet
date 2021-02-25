@@ -10,7 +10,6 @@ class CitySearch extends Component {
   handleInputChanged = (event) => {
     this.setState({ showSuggestions: true });
     const value = event.target.value;
-    console.log(this.props.locations, 'locations=====')
     const suggestions = this.props.locations.filter((location) => {
       return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
     });
@@ -27,7 +26,7 @@ class CitySearch extends Component {
       suggestions: [],
       showSuggestions: false,
     });
-    this.props.updateEvents(suggestion);
+    this.props.updateEvents(suggestion, null);
   };
 
   render() {
@@ -40,8 +39,14 @@ class CitySearch extends Component {
           onChange={this.handleInputChanged}
           placeholder="City"
         />
-        <ul className= {this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"
-          }>
+        {/* <ul className= {this.state.showSuggestions ? "suggestions showSuggestions" : "display-none"}> */}
+        <ul
+          className="suggestions"
+          style={
+            this.state.showSuggestions
+              ? {}
+              : { display: 'none' }
+          }> 
           {this.state.suggestions.map((suggestion) => (
             <li
               key={suggestion}

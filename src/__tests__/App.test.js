@@ -15,7 +15,7 @@ describe('<App /> integration', () => {
     const CitySearchWrapper = AppWrapper.find(CitySearch);
     CitySearchWrapper.instance().handleItemClicked("Berlin, Germany");
     expect(AppWrapper.instance().updateEvents).toHaveBeenCalledTimes(1);
-    expect(AppWrapper.instance().updateEvents).toHaveBeenCalledWith('Berlin, Germany');
+    expect(AppWrapper.instance().updateEvents).toHaveBeenCalledWith('Berlin, Germany', null)
     AppWrapper.unmount();
   });
 
@@ -47,11 +47,15 @@ describe("<App /> component", () => {
   });
 
   test("render correct list of events", () => {
-    const AppWrapper = shallow(<App />);
-    AppWrapper.setState({
-      events: mockData,
-    });
-    expect(AppWrapper.find(".event")).toHaveLength(mockData.length);
+    const AppWrapper = mount(<App />);
+    const AppEventsState = AppWrapper.state('events');
+    // AppWrapper.setState({
+    //   events: mockData,
+    // });
+    // console.log(AppWrapper.find(".event"), "find evernt===========")
+    // expect(AppWrapper.find(".event")).toHaveLength(mockData.length);
+    expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
+
     AppWrapper.unmount();
   });
 });

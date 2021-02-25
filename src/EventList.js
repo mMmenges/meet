@@ -3,7 +3,6 @@ import Event from "./Event";
 
 class EventList extends Component {
   render() {
-    console.log('events=========', this.props)
     return (
       <ul className="EventList">
         {this.props.events.map((event) => (

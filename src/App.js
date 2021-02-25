@@ -14,13 +14,13 @@ class App extends Component {
     numberOfEvents: 32,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.mounted = true;
-    getEvents().then((events) => {
+    getEvents().then((response) => {
       if (this.mounted) {
         this.setState({
-          events,
-          locations: extractLocations(events)
+          events: response.events,
+          locations: response.locations
         });
       }
     });
@@ -30,17 +30,18 @@ class App extends Component {
     this.mounted = false;
   }
 
+  /*
   updateEvents = (location, eventCount) => {
     const { currentLocation, numberOfEvents } = this.state;
     if (location) {
-      getEvents().then((events) => {
+      getEvents().then((response) => {
         const locationEvents =
-          location === "all"
+          (location === "all")
             ? response.events
             : response.events.filter((event) => event.location === location);
         const events = locationEvents.slice(0, numberOfEvents);
         return this.setState({
-          events: events,
+          events: response.events,
           currentLocation: location,
           locations: response.locations,
         });
@@ -62,6 +63,28 @@ class App extends Component {
       });
     }
   };
+
+  */
+
+updateEvents = (location) => {
+    getEvents().then((events) => {
+      const showEventCount = this.state.showEventCount;
+
+      const locationEvents = (location === 'all')
+        ? events
+        : events.filter((event) => event.location === location);
+
+      const filteredEvents = locationEvents.slice(0, showEventCount)
+
+      this.setState({
+        // new array matching locations and showEventCount filter.
+        events: filteredEvents
+      });
+    });
+  }
+
+
+
 
   render() {
     return (
