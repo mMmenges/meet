@@ -1,59 +1,63 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import { mockData } from '../mock-data';
-import Event from '../Event';
-//import moment from 'moment';
+import React from "react";
+import { shallow } from "enzyme";
+import Event from "../Event";
+import { mockData } from "../mock-data";
 
-describe('<Event /> component', () => {
-  let EventWrapper, event;
-  beforeAll(() => {
-    event = mockData[0]; // Mock event prop
-    EventWrapper = shallow(<Event event={event} />);
+describe("<Event /> component", () => {
+  let EventWrapper;
+    beforeAll(() => {
+      EventWrapper = shallow(<Event event={mockData[0]} />);
+    });
+
+  beforeEach(() => {
+    EventWrapper.setState({ showDetails: false });
   });
 
-  // Component props
-  test('should render with correct event prop', () => {
-    expect(EventWrapper.instance().props.event).toEqual(event);
+  test("render enough information", () => {
+    expect(EventWrapper.find(".event")).toHaveLength(1);
+    expect(EventWrapper.find(".time")).toHaveLength(1);
+    expect(EventWrapper.find(".summary")).toHaveLength(1);
   });
 
-  test('should render event summary correctly', () => {
-    expect(EventWrapper.find('.summary').text()).toBe(event.summary);
+  test("render correct information", () => {
+    expect(EventWrapper.find(".time").text()).toEqual("2020-05-19T16:00:00+02:00 - 2020-05-19T17:00:00+02:00");
+    expect(EventWrapper.find(".summary").text()).toEqual("Learn JavaScript");
   });
 
-  test('should render event location correctly', () => {
-    expect(EventWrapper.find('.location').text()).toBe(event.location);
+  test("click on details button should expand event details", () => {
+    EventWrapper.find(".details-btn").simulate("click");
+    expect(EventWrapper.find(".extra")).toHaveLength(1);
   });
 
-  test('should render details button', () => {
-    expect(EventWrapper.find('.btn-details')).toHaveLength(1);
+  test("click on details button should collapse events", () => {
+    EventWrapper.setState({ showDetails: true });
+    EventWrapper.find(".details-btn").simulate("click");
+    expect(EventWrapper.find(".extra")).toHaveLength(0);
   });
 
-  // Component state
-  test('should render event component state correctly', () => {
-    expect(EventWrapper.state('isExpanded')).toBe(false);
+  test("click on details button should collapse event details", () => {
+    EventWrapper.setState({ showDetails: true });
+    EventWrapper.find(".details-btn").simulate("click");
+    expect(EventWrapper.find(".extra")).toHaveLength(0);
   });
 
-  // Component state change (collapsed event -> expanded event)
-  test('clicking "show-details" button should expand event component', () => {
-    EventWrapper.find('.btn-details').simulate('click');
-    expect(EventWrapper.state('isExpanded')).toBe(true);
+  test("Display extra info", () => {
+    EventWrapper.setState({ showDetails: true });
+    expect(EventWrapper.find(".extra .location")).toHaveLength(1);
+    expect(EventWrapper.find(".extra .htmlLink")).toHaveLength(1);
+    expect(EventWrapper.find(".extra .description")).toHaveLength(1);
   });
 
-  test('expanded event should render event html link correctly', () => {
-    expect(EventWrapper.find('.link').props().href).toBe(event.htmlLink);
-  });
-
-  test('expanded event should render event description correctly', () => {
-    expect(EventWrapper.find('.description').text()).toBe(event.description);
-  });
-
-  // Component state change (expanded event -> collapsed event)
-  test('expanded event should collapse when details button is clicked', () => {
-    EventWrapper.find('.btn-details').simulate('click');
-    expect(EventWrapper.state('isExpanded')).toBe(false);
-  });
-
-  test('expanded event component should no longer be present after collapsing event', () => {
-    expect(EventWrapper.find('.Expanded-Event')).toHaveLength(0);
+  test("Display correct extra info", () => {
+    EventWrapper.setState({ showDetails: true });
+    expect(EventWrapper.find(".extra .location").text()).toEqual(
+      "Berlin, Germany"
+    );
+    expect(EventWrapper.find(".extra .htmlLink").prop("href")).toEqual(
+      "https://www.google.com/calendar/event?eid=NGVhaHM5Z2hraHJ2a2xkNzJob2d1OXBoM2VfMjAyMDA1MTlUMTQwMDAwWiBmdWxsc3RhY2t3ZWJkZXZAY2FyZWVyZm91bmRyeS5jb20"
+    );
+    expect(EventWrapper.find(".extra .description").text()).toEqual(
+      "Have you wondered how you can ask Google to show you the list of the top ten must-see places in Berlin? And how Google presents you the list? How can you submit the details of an application? Well, JavaScript is doing these. :) \n\nJavascript offers interactivity to a dull, static website. Come, learn JavaScript with us and make those beautiful websites."
+    );
   });
 });

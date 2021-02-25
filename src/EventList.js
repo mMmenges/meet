@@ -1,21 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Event from './Event';
+import React, { Component } from "react";
+import Event from "./Event";
 
-const EventList = ({ events }) => {
-  return (!events) ? null : (
-      <ul className='EventList'>
-        {events.map((event) => (
+class EventList extends Component {
+  render() {
+    return (
+      <ul className="EventList">
+        {this.props.events.map((event) => (
           <li key={event.id}>
             <Event event={event} />
           </li>
         ))}
       </ul>
-  )
+    );
+  }
 }
- 
-EventList.propTypes = {
-  events: PropTypes.array.isRequired,
-};
 
 export default EventList;
