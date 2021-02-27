@@ -18,7 +18,7 @@ export const getAccessToken = async () => {
     const code = await searchParams.get("code");
     if (!code) {
       const results = await axios.get(
-        "https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
+        "https://sybi7s2uaf.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
       );
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
@@ -31,7 +31,7 @@ export const getAccessToken = async () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    `https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
+    `https://sybi7s2uaf.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`
   )
     .then((res) => {
       return res.json();
@@ -61,12 +61,11 @@ export const getEvents = async () => {
     return { events: mockData, locations: extractLocations(mockData)};
   }
 
-
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url = `https://vl3kg6ucm7.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
+    const url = `https://sybi7s2uaf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`;
     const result = await axios.get(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
