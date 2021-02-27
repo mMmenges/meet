@@ -6,6 +6,7 @@ import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
 
+
 class App extends Component {
   state = {
     events: [],
@@ -30,7 +31,7 @@ class App extends Component {
     this.mounted = false;
   }
 
-  /*
+  
   updateEvents = (location, eventCount) => {
     const { currentLocation, numberOfEvents } = this.state;
     if (location) {
@@ -64,8 +65,7 @@ class App extends Component {
     }
   };
 
-  */
-
+/* /*
 updateEvents = (location) => {
     getEvents().then((events) => {
       const showEventCount = this.state.showEventCount;
@@ -82,9 +82,7 @@ updateEvents = (location) => {
       });
     });
   }
-
-
-
+*/ 
 
   render() {
     return (

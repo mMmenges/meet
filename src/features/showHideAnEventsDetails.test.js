@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import App from '../App';
-import { loadFeature, defineFeature } from 'jest-cucumber';
+import { loadFeature, defineFeature } from 'jest-cucumber'
 
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 
