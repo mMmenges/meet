@@ -14,12 +14,13 @@ class NumberOfEvents extends Component {
   }
 
   render() {
+    const { number } = this.state;
     return(
       <div className="numberOfEvents">
         <input
           type="text"
-          id="numberOfEvents input"
-          value={this.state.number}
+          id="number_input"
+          value={number}
           onChange={this.handleInputChanged}
         />
         <ErrorAlert text={this.state.infoText} />
