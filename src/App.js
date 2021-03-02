@@ -3,16 +3,28 @@ import CitySearch from "./CitySearch";
 import EventList from "./EventList";
 import "./App.css";
 import NumberOfEvents from "./NumberOfEvents";
-import { getEvents, extractLocations } from "./api";
+import { getEvents } from "./api";
 import "./nprogress.css";
+import { WarningAlert } from "./Alert";
 
 class App extends Component {
   state = {
     events: [],
-    currentLocation: "all",
+    scurrentLocation: "all",
     locations: [],
     numberOfEvents: 32,
   };
+
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter((event) => event.location === location).length
+      const city = location.split(' ').shift()
+      return { city, number };
+    })
+    return data;
+  };
+
 
   componentDidMount() {
     this.mounted = true;
@@ -36,12 +48,12 @@ class App extends Component {
     if (location) {
       getEvents().then((response) => {
         const locationEvents =
-          (location === "all")
+          location === "all"
             ? response.events
             : response.events.filter((event) => event.location === location);
         const events = locationEvents.slice(0, numberOfEvents);
         return this.setState({
-          events: response.events,
+          events: events,
           currentLocation: location,
           locations: response.locations,
         });
@@ -67,6 +79,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+         <WarningAlert text={this.state.warningText} />
+         <h1>Meet App</h1>
+        <h4>Choose your nearest city</h4>
         <CitySearch
           updateEvents={this.updateEvents}
           locations={this.state.locations}

@@ -90,4 +90,3 @@ describe("<CitySearch locations={locations} /> component", () => {
     //expect(CitySearchWrapper.state("query")).toBe("Berlin, Germany");
   });
 });
-

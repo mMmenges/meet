@@ -5,7 +5,6 @@ import EventList from "../EventList";
 import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from "../mock-data";
-import { extractLocations, getEvents } from '../api';
 
 describe('<App /> integration', () => {
   test("get list of events after the user selects a city", async () => {
@@ -48,14 +47,10 @@ describe("<App /> component", () => {
 
   test("render correct list of events", () => {
     const AppWrapper = mount(<App />);
-    const AppEventsState = AppWrapper.state('events');
-    // AppWrapper.setState({
-    //   events: mockData,
-    // });
-    // console.log(AppWrapper.find(".event"), "find evernt===========")
-    // expect(AppWrapper.find(".event")).toHaveLength(mockData.length);
-    expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
-
+    AppWrapper.setState({
+      events: mockData,
+    });
+    expect(AppWrapper.find(".event")).toHaveLength(mockData.length);
     AppWrapper.unmount();
   });
 });
